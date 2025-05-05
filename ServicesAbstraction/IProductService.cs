@@ -1,4 +1,5 @@
-﻿using Shared.DataTransferObjects.Products;
+﻿using Shared;
+using Shared.DataTransferObjects.Products;
 using Shared.Enums;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace ServicesAbstraction
     public interface IProductService
     {
         //get all
-        Task<IEnumerable<ProductResponse>> GetAllProductsAsync(ProductQueryParameters productQueryParameters);
+        Task<PaginatedResponse<ProductResponse>> GetAllProductsAsync(ProductQueryParameters productQueryParameters);
         //get product by id
         Task<ProductResponse> GetProductByIdAsync(int id);
         //get all brands

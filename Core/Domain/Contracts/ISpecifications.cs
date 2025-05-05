@@ -13,6 +13,9 @@ namespace Domain.Contracts
         List<Expression<Func<T, object>>> IncludeExpressions { get; } //Loading Nav Props
         Expression<Func<T, object>> OrderBy { get; } //Order Ascending
         Expression<Func<T, object>> OrderByDescending { get; } //Order Descending
+        int Skip { get; }
+        int Take { get; }
+        bool IsPaginated { get; }
 
     }
 }

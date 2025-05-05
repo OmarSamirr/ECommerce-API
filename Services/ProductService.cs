@@ -3,6 +3,7 @@ using Domain.Contracts;
 using Domain.Models;
 using Services.Specifications;
 using ServicesAbstraction;
+using Shared;
 using Shared.DataTransferObjects.Products;
 using Shared.Enums;
 using System;
@@ -23,13 +24,20 @@ namespace Services
             return brandsResponse;
         }
 
-        public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync(ProductQueryParameters productQueryParameters)
+        public async Task<PaginatedResponse<ProductResponse>> GetAllProductsAsync(ProductQueryParameters productQueryParameters)
         {
             var specs = new ProductWithTypeAndBrandSpecifications(productQueryParameters);//type and brand filter, sorting
 
             var repository = _unitOfWork.GetRepository<Product, int>();
             var products = await repository.GetAllAsync(specs);
-            return _mapper.Map<IEnumerable<ProductResponse>>(products);
+            var productResopnse = _mapper.Map<IEnumerable<ProductResponse>>(products);
+            return new PaginatedResponse<ProductResponse>
+            {
+                Data = productResopnse,
+                PageIndex = productQueryParameters.PageIndex,
+                PageSize = productQueryParameters.PageSize,
+                Count = productResopnse.Count()
+            };
         }
 
         public async Task<IEnumerable<TypeResponse>> GetAllTypesAsync()

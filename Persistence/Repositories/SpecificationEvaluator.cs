@@ -26,6 +26,10 @@ namespace Persistence.Repositories
             else if (specifications.OrderByDescending is not null)
                 query = query.OrderByDescending(specifications.OrderByDescending);
 
+            //check for pagination
+            if(specifications.IsPaginated)
+                query = query.Skip(specifications.Skip).Take(specifications.Take);
+
 
             //using aggregate instead of foreach
             query = specifications.IncludeExpressions

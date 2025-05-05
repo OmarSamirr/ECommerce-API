@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServicesAbstraction;
+using Shared;
 using Shared.DataTransferObjects.Products;
 using Shared.Enums;
 using System;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Presentation
+namespace Presentation.Controllers
 {
     [Route("api/[controller]")]//BaseUrl/api/Products
     [ApiController]
@@ -16,7 +17,7 @@ namespace Presentation
     {
         //get all
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts([FromQuery] ProductQueryParameters productQueryParameters)
+        public async Task<ActionResult<PaginatedResponse<ProductResponse>>> GetAllProducts([FromQuery] ProductQueryParameters productQueryParameters)
         {
             var products = await _serviceManager.ProductService.GetAllProductsAsync(productQueryParameters);
             return Ok(products);
