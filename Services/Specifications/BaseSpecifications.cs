@@ -20,5 +20,15 @@ namespace Services.Specifications
         {
             IncludeExpressions.Add(include);
         }
+        public Expression<Func<T, object>> OrderBy { get; private set; }
+        public Expression<Func<T, object>> OrderByDescending { get; private set; }
+        protected void AddOrderBy(Expression<Func<T, object>> orderBy)
+        {
+            OrderBy = orderBy;
+        }
+        protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescending)
+        {
+            OrderByDescending = orderByDescending;
+        }
     }
 }

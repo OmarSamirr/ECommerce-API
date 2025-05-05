@@ -19,6 +19,14 @@ namespace Persistence.Repositories
             //foreach (var include in specifications.IncludeExpressions)//Load nav props
             //    query.Include(include);
 
+            //adding sorting
+            if (specifications.OrderBy is not null)
+                query = query.OrderBy(specifications.OrderBy);
+
+            else if (specifications.OrderByDescending is not null)
+                query = query.OrderByDescending(specifications.OrderByDescending);
+
+
             //using aggregate instead of foreach
             query = specifications.IncludeExpressions
                                   .Aggregate(query, (currentQuery, include) => currentQuery.Include(include));

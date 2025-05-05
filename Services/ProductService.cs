@@ -4,6 +4,7 @@ using Domain.Models;
 using Services.Specifications;
 using ServicesAbstraction;
 using Shared.DataTransferObjects.Products;
+using Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,9 @@ namespace Services
             return brandsResponse;
         }
 
-        public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync()
+        public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync(ProductQueryParameters productQueryParameters)
         {
-            var specs = new ProductWithTypeAndBrandSpecifications();//no filter with id
+            var specs = new ProductWithTypeAndBrandSpecifications(productQueryParameters);//type and brand filter, sorting
 
             var repository = _unitOfWork.GetRepository<Product, int>();
             var products = await repository.GetAllAsync(specs);
