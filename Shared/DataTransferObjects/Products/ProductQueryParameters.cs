@@ -17,11 +17,11 @@ namespace Shared.DataTransferObjects.Products
         private const int _defaultPageSize = 5;
         private const int _maxPageSize = 15;
 
-        private int pageSize;
+        private int _pageSize = _defaultPageSize;
         public int PageSize
         {
-            get { return pageSize; }
-            set { pageSize = value > 0 && value < _maxPageSize ? value : _defaultPageSize; }
+            get { return _pageSize; }
+            set { _pageSize = value > 0 && value < _maxPageSize ? value : _defaultPageSize; }
         }
     }
 }

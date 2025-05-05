@@ -52,5 +52,8 @@ namespace Persistence.Repositories
                 .CreateQuery(_storeDbContext.Set<TEntity>(), specifications)
                 .ToListAsync();
         }
+
+        public async Task<int> CountAsync(ISpecifications<TEntity> specifications) =>
+            await SpecificationEvaluator.CreateQuery(_storeDbContext.Set<TEntity>(), specifications).CountAsync();
     }
 }
