@@ -1,4 +1,5 @@
-﻿using Shared.ErrorModels;
+﻿using Domain.Exceptions;
+using Shared.ErrorModels;
 using System.Net;
 
 namespace ECommerce.Web.Middlewares
@@ -18,19 +19,37 @@ namespace ECommerce.Web.Middlewares
             try
             {
                 await _next.Invoke(context);
-
+                //If Endpoint is not found
+                if (context.Response.StatusCode == (int)HttpStatusCode.NotFound)
+                {
+                    context.Response.ContentType = "application/json";
+                    var response = new ErrorDetails()
+                    {
+                        StatusCode = (int)HttpStatusCode.NotFound,
+                        ErrorMessage = $"Endpoint with this path: {context.Request.Path} is not found."
+                    };
+                    //Return as Json
+                    await context.Response.WriteAsJsonAsync(response);
+                }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
                 //Response object with content type, status code
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 context.Response.ContentType = "application/json";
                 var response = new ErrorDetails()
                 {
-                    StatusCode = (int)HttpStatusCode.InternalServerError,
                     ErrorMessage = ex.Message
                 };
+
+                response.StatusCode = ex switch
+                {
+                    NotFoundException => (int)HttpStatusCode.NotFound,
+                    _ => (int)HttpStatusCode.InternalServerError
+                };
+                context.Response.StatusCode = response.StatusCode;
+
+                //Return as Json
                 await context.Response.WriteAsJsonAsync(response);
             }
         }
