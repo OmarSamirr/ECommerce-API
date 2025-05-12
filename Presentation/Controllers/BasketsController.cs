@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
-    public class BasketController
+    public class BasketsController
     {
         //Get User Basket
 
