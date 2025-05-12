@@ -18,8 +18,8 @@ namespace Domain.Models.Products
         #endregion
 
         #region Navigational Property
-        public ProductBrand ProductBrand { get; set; }
-        public ProductType ProductType { get; set; }
+        public ProductBrand ProductBrand { get; set; } = default!;
+        public ProductType ProductType { get; set; } = default!;
         #endregion
     }
 }

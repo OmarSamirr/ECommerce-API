@@ -8,7 +8,7 @@ namespace Domain.Models.Baskets
 {
     public class CustomerBasket
     {
-        public string Id { get; set; }//GUID: Generated From Client Side
-        public IEnumerable<BasketItem> Items { get; set; }
+        public string Id { get; set; } = default!;//GUID: Generated From Client Side
+        public IEnumerable<BasketItem> Items { get; set; } = default!;
     }
 }
