@@ -1,4 +1,6 @@
 ﻿using Domain.Contracts;
+using Domain.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +36,26 @@ namespace Persistence
                 return ConnectionMultiplexer.Connect(redisConnection!);
             });
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.RegisterIdentity();
+            return services;
+        }
+
+        private static IServiceCollection RegisterIdentity(this IServiceCollection services)
+        {
+            //services.AddIdentity<ApplicationUser, IdentityRole>();
+
+            services.AddIdentityCore<ApplicationUser>(config =>
+            {
+                config.User.RequireUniqueEmail = true;
+                config.Password.RequiredLength = 8;
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireLowercase = false;
+                config.Password.RequireDigit = false;
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<StoreIdentityDbContext>();
+
             return services;
         }
     }

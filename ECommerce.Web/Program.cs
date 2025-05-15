@@ -1,7 +1,9 @@
 
 using Domain.Contracts;
+using Domain.Models.Identity;
 using ECommerce.Web.Factories;
 using ECommerce.Web.Middlewares;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -24,7 +26,6 @@ namespace ECommerce.Web
             builder.Services.AddInfrastructureRegistration(builder.Configuration);
             builder.Services.AddApplicationServices();
             builder.Services.AddWebApplicationService();
-
             var app = builder.Build();
 
             await app.InitializeDbAsync();

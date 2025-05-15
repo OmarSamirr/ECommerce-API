@@ -1,5 +1,7 @@
 ﻿using Domain.Contracts;
+using Domain.Models.Identity;
 using Domain.Models.Products;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using System;
@@ -11,7 +13,9 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    public class DbInitializer(StoreDbContext _storeDbContext) : IDbInitializer
+    public class DbInitializer(StoreDbContext _storeDbContext,
+                 RoleManager<IdentityRole> _roleManager,
+                 UserManager<ApplicationUser> _userManager) : IDbInitializer
     {
         public async Task InitializeAsync()
         {
@@ -51,6 +55,48 @@ namespace Persistence
                         _storeDbContext.Set<Product>().AddRange(products);
 
                     await _storeDbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public async Task InitializeIdentityAsync()
+        {
+            // In Deployment
+            //if ((await _storeDbContext.Database.GetPendingMigrationsAsync()).Any())
+            //    await _storeDbContext.Database.MigrateAsync();
+
+            //In Development
+            try
+            {
+                if (!_roleManager.Roles.Any())
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                }
+                if (!_userManager.Users.Any())
+                {
+                    var superAdmin = new ApplicationUser()
+                    {
+                        DisplayName = "Super Admin",
+                        UserName = "superadmin",
+                        Email = "superadmin@gmail.com"
+                    };
+                    var admin = new ApplicationUser()
+                    {
+                        DisplayName = "Admin",
+                        UserName = "admin",
+                        Email = "admin@gmail.com"
+                    };
+                    await _userManager.CreateAsync(superAdmin, "P@ssw0rd");
+                    await _userManager.CreateAsync(admin, "password");
+
+                    await _userManager.AddToRoleAsync(superAdmin, "SuperAdmin");
+                    await _userManager.AddToRoleAsync(admin, "Admin");
                 }
             }
             catch (Exception ex)

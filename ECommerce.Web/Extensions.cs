@@ -24,12 +24,15 @@ namespace ECommerce.Web
             services.AddSwaggerGen();
         }
 
-        public static async Task InitializeDbAsync(this WebApplication app)
+        public static async Task<WebApplication> InitializeDbAsync(this WebApplication app)
         {
             //Create Scope For Seeding
             using var scope = app.Services.CreateScope();
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
             await dbInitializer.InitializeAsync();
+            await dbInitializer.InitializeIdentityAsync();
+
+            return app;
         }
     }
 }
