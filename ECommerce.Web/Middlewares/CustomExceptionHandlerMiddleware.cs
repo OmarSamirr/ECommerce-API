@@ -42,6 +42,8 @@ namespace ECommerce.Web.Middlewares
             response.StatusCode = ex switch
             {
                 NotFoundException => (int)HttpStatusCode.NotFound,
+                UnauthorizedException => (int)HttpStatusCode.Unauthorized,
+                BadRequestException badRequestException => GetValidationErrors(badRequestException, response),
                 _ => (int)HttpStatusCode.InternalServerError
             };
             context.Response.StatusCode = response.StatusCode;
@@ -63,6 +65,12 @@ namespace ECommerce.Web.Middlewares
                 //Return as Json
                 await context.Response.WriteAsJsonAsync(response);
             }
+        }
+
+        private static int GetValidationErrors(BadRequestException badRequestException, ErrorDetails response)
+        {
+            response.Errors = badRequestException.Errors;
+            return (int)HttpStatusCode.BadRequest;
         }
     }
 }
