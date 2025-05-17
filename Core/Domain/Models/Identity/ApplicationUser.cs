@@ -15,7 +15,7 @@ namespace Domain.Models.Identity
     }
     public class Address
     {
-        public string Id { get; set; } = default!;
+        public int Id { get; set; }
         public string City { get; set; } = default!;
         public string Street { get; set; } = default!;
         public string Country { get; set; } = default!;

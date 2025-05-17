@@ -107,7 +107,6 @@ namespace Services
             else
             {
                 user.Address = _mapper.Map<Address>(addressDto);
-                user.Address.Id = Guid.NewGuid().ToString();
             }
             await _userManager.UpdateAsync(user);
             return _mapper.Map<AddressDto>(user.Address);
