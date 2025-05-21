@@ -9,11 +9,11 @@ namespace Shared.DataTransferObjects.Products
     public class ProductResponse
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string PictureUrl { get; set; }
-        public string BrandName { get; set; }
-        public string TypeName { get; set; }
+        public string Name { get; set; } = default!;
+        public string Description { get; set; } = default!;
+        public string PictureUrl { get; set; } = default!;
+        public string BrandName { get; set; } = default!;
+        public string TypeName { get; set; } = default!;
         public decimal Price { get; set; }
 
     }

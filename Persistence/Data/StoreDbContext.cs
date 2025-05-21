@@ -1,4 +1,5 @@
-﻿using Domain.Models.Products;
+﻿using Domain.Models.Orders;
+using Domain.Models.Products;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

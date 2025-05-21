@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models.Baskets
+namespace Domain.Models.Orders
 {
-    public class BasketItem
+    public class OrderItem : BaseEntity<Guid>
     {
-        public string Id { get; set; } = default!;
-        public string Name { get; set; } = default!;
+        public int ProductId { get; set; }
+        public string ProductName { get; set; } = default!;
         public string PictureUrl { get; set; } = default!;
         public decimal Price { get; set; }
         public int Quantity { get; set; }

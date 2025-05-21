@@ -1,5 +1,6 @@
 ﻿using Domain.Contracts;
 using Domain.Models.Identity;
+using Domain.Models.Orders;
 using Domain.Models.Products;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,16 @@ namespace Persistence
             //In Development
             try
             {
+                if (!_storeDbContext.Set<DeliveryMethod>().Any())
+                {
+                    var data = await File.ReadAllTextAsync(@"..\Persistence\Data\Seeding\deliveryMethods.json");
+                    var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(data);
+
+                    if (deliveryMethods is not null && deliveryMethods.Any())
+                        _storeDbContext.Set<DeliveryMethod>().AddRange(deliveryMethods);
+
+                    await _storeDbContext.SaveChangesAsync();
+                }
                 if (!_storeDbContext.Set<ProductBrand>().Any())
                 {
                     var data = await File.ReadAllTextAsync(@"..\Persistence\Data\Seeding\brands.json");

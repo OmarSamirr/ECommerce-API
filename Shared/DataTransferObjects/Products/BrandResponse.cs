@@ -8,7 +8,7 @@ namespace Shared.DataTransferObjects.Products
 {
     public class BrandResponse
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int Id { get; set; } = default!;
+        public string Name { get; set; } = default!;
     }
 }
