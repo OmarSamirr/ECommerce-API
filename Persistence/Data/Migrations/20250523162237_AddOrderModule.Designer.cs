@@ -12,7 +12,7 @@ using Persistence.Data;
 namespace Persistence.Data.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20250521153246_AddOrderModule")]
+    [Migration("20250523162237_AddOrderModule")]
     partial class AddOrderModule
     {
         /// <inheritdoc />
@@ -65,8 +65,9 @@ namespace Persistence.Data.Migrations
                     b.Property<int>("DeliveryMethodId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("PaymentIntentId")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("PaymentIntentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PaymentStatus")
                         .HasColumnType("int");

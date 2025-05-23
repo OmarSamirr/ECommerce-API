@@ -13,7 +13,7 @@ namespace Domain.Models.Orders
         public string UserEmail { get; set; } = default!;
         public List<OrderItem> Items { get; set; } = [];
         public OrderAddress Address { get; set; } = default!;
-        public decimal PaymentIntentId { get; set; } = default!;
+        public string PaymentIntentId { get; set; } = string.Empty;
         public decimal SubTotal { get; set; } = default!;
         public DateTimeOffset Date { get; set; } = DateTimeOffset.Now;
         public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Pending;

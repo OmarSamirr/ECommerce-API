@@ -38,7 +38,7 @@ namespace Persistence.Data.Migrations
                     Address_Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_FisrtName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PaymentIntentId = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PaymentIntentId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SubTotal = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
                     Date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     PaymentStatus = table.Column<int>(type: "int", nullable: false),
