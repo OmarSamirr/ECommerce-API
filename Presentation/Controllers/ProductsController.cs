@@ -14,6 +14,7 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]//BaseUrl/api/Products
     [ApiController]
+    [Authorize]
     public class ProductsController(IServiceManager _serviceManager) : ControllerBase
     {
         //get all

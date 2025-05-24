@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,19 @@ namespace Domain.Models.Orders
 {
     public class Order : BaseEntity<Guid>
     {
+        public Order()
+        {
+
+        }
+        public Order(List<OrderItem> items, OrderAddress address, decimal subTotal,
+                            string email, DeliveryMethod deliveryMethod)
+        {
+            Items = items;
+            Address = address;
+            SubTotal = subTotal;
+            UserEmail = email;
+            DeliveryMethod = deliveryMethod;
+        }
         public string UserEmail { get; set; } = default!;
         public List<OrderItem> Items { get; set; } = [];
         public OrderAddress Address { get; set; } = default!;

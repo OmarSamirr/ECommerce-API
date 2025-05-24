@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServicesAbstraction;
 using Shared.DataTransferObjects.Baskets;
 using System;
@@ -11,6 +12,7 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]//BaseUrl/api/Baskets
     [ApiController]
+    [Authorize]
     public class BasketsController(IServiceManager _serviceManager) : ControllerBase
     {
         //Get User Basket
