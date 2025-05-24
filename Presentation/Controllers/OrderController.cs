@@ -22,5 +22,24 @@ namespace Presentation.Controllers
             var email = User.FindFirstValue(ClaimTypes.Email);
             return Ok(await _serviceManager.OrderService.CreateAsync(orderRequest, email));
         }
+
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<OrderResponse>> Get([FromRoute] Guid id)
+        {
+            return Ok(await _serviceManager.OrderService.GetByIdAsync(id));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<OrderResponse>>> Get()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            return Ok(await _serviceManager.OrderService.GetAllAsync(email));
+        }
+
+        [HttpGet("DeliveryMethods")]
+        public async Task<ActionResult<IEnumerable<DeliveryMethodResponse>>> GetDeliveryMethods()
+        {
+            return Ok(await _serviceManager.OrderService.GetDeliveryMethodsAsync());
+        }
     }
 }
