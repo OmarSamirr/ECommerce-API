@@ -16,7 +16,29 @@ namespace Services
         public static IServiceCollection AddApplicationServices(this IServiceCollection services,
                                                                      IConfiguration configuration)
         {
-            services.AddScoped<IServiceManager, ServiceManager>();
+            //Old Service Manager Using Lazy
+            //services.AddScoped<IServiceManager, ServiceManager>();
+
+            //New Service Manager Using Delegate.Invoke()
+            services.AddScoped<IServiceManager, ServiceManagerWithFactoryDelegate>();
+
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped<IOrderService, OrderService>();
+            
+            services.AddScoped<Func<IProductService>>(provider => ()
+            => provider.GetRequiredService<IProductService>());
+
+            services.AddScoped<Func<IBasketService>>(provider => ()
+            => provider.GetRequiredService<IBasketService>());
+            
+            services.AddScoped<Func<IAuthenticationService>>(provider => ()
+            => provider.GetRequiredService<IAuthenticationService>());
+            
+            services.AddScoped<Func<IOrderService>>(provider => ()
+            => provider.GetRequiredService<IOrderService>());
+
             services.AddAutoMapper(typeof(ProductProfile).Assembly);
             services.Configure<JwtOptions>(configuration.GetSection("JWTOptions"));
             return services;
