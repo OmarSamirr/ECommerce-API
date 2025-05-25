@@ -35,7 +35,12 @@ namespace ECommerce.Web
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(options =>
+                {
+                    options.DocumentTitle = "Ecommerce Application";
+                    options.EnableFilter();
+                    options.DisplayRequestDuration();
+                });
             }
 
             app.UseStaticFiles();
