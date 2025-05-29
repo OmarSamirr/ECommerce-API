@@ -26,16 +26,17 @@ namespace Services
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IOrderService, OrderService>();
-            
+            services.AddScoped<ICacheService, CacheService>();
+
             services.AddScoped<Func<IProductService>>(provider => ()
             => provider.GetRequiredService<IProductService>());
 
             services.AddScoped<Func<IBasketService>>(provider => ()
             => provider.GetRequiredService<IBasketService>());
-            
+
             services.AddScoped<Func<IAuthenticationService>>(provider => ()
             => provider.GetRequiredService<IAuthenticationService>());
-            
+
             services.AddScoped<Func<IOrderService>>(provider => ()
             => provider.GetRequiredService<IOrderService>());
 

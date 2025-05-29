@@ -36,6 +36,7 @@ namespace Persistence
                 return ConnectionMultiplexer.Connect(redisConnection!);
             });
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<ICacheRepository, CacheRepository>();
             services.RegisterIdentity();
             return services;
         }
